@@ -1,4 +1,4 @@
-import { isGif } from './../utils';
+import { isGif, isSmallerThan } from './../utils';
 import { Base64Image, ErrorPicture } from './../base64.image.model';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import * as Flow from '@flowjs/flow.js'
@@ -80,7 +80,7 @@ export class DropImageComponent implements OnInit {
     this.flow.on('fileAdded', (flowFile: Flow.IFlowFile) => {
       const reader = new FileReader();
       reader.onload = (readerEvent: any) => {
-        const hasErrors = this._handleErrors(readerEvent.target.result);
+        const hasErrors = this._handleErrorType(readerEvent.target.result);
         if (hasErrors) {
           return;
         }
@@ -90,12 +90,12 @@ export class DropImageComponent implements OnInit {
     });
   }
 
-  private _handleErrors(base64: string): boolean {
+  private _handleErrorType(base64: string): boolean {
     const hasError = isGif(base64);
     if (hasError) {
       this.onError.emit(new ErrorPicture('ImageType', 'Gif was not supported'));
-      return hasError;
     }
+    return hasError;
   }
 
   private _handleImage(readerEvent: any) {
@@ -104,9 +104,28 @@ export class DropImageComponent implements OnInit {
     const image = new Image();
     image.src = readerEvent.target.result;
     image.onload = () => {
+      const errorSize = this._handleImageSize(image.width, image.height);
+      if (errorSize) {
+        return;
+      }
+
       this.image = new Base64Image(readerEvent.target.result, false);
       this.onImageChange.emit(this.image);
     };
     this.flow.files = [];
   }
+
+  private _handleImageSize(width: number, height: number): boolean {
+    if (!this.minWidth && !this.minHeigth) {
+      return;
+    }
+
+    const hasError = isSmallerThan({width, height}, this.minWidth, this.minHeigth);
+    if (hasError) {
+      this.onError.emit(new ErrorPicture('ImageSize', 'The image is smaller than defined'));
+    }
+
+    return hasError;
+  }
+
 }
