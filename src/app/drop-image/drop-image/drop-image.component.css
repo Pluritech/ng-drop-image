@@ -1,0 +1,7 @@
+.image-preview {
+  border: 1px dashed #333;
+  border-top: none;
+  padding: 30px;
+  padding-bottom: 60px;
+  margin-bottom: 20px;
+}

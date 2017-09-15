@@ -1,0 +1,18 @@
+<div class="input-group">
+  <input type="text" class="form-control" disabled placeholder="Envie a logomarca. Resolução mínima (650x310)">
+  <span class="input-group-btn">
+    <button type="button" class="btn btn-info btn-flat btn-social" id="flow-button">
+      <i class="fa fa-picture-o"></i>
+      {{btnSelect}}
+    </button>
+  </span>
+</div>
+<div class="image-preview" id="drop-area">
+  <img class="img-responsive" alt="" [src]="image?.base64Full || imagePath" *ngIf="image || imagePath">
+  <p *ngIf="hasError" class="text-danger">
+    {{errorText}}
+  </p>
+  <p *ngIf="!hasError && (!image && !imagePath)">
+    {{defaultText}}
+  </p>
+</div>
