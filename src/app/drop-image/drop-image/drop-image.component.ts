@@ -99,8 +99,6 @@ export class DropImageComponent implements OnInit {
   }
 
   private _handleImage(readerEvent: any) {
-    let resultBase64: string = readerEvent.target.result;
-    resultBase64 = resultBase64.substr(23, resultBase64.length);
     const image = new Image();
     image.src = readerEvent.target.result;
     image.onload = () => {
