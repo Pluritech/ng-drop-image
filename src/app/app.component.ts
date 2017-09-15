@@ -50,5 +50,7 @@ export class AppComponent implements OnInit {
 
   whenServerImageDelete(image: any): void {
     console.log('image to delete in server', image);
+    const index = this.myServerImageList.indexOf(image);
+    this.myServerImageList.splice(index, 1);
   }
 }
