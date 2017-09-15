@@ -46,14 +46,20 @@ export class DropImageComponent implements OnInit {
   /* Working with multiple images, the user can have two lists. In one list he can handle the images that was not send to server yet.
     The order list can handle images that was received from server, for example. */
 
-  /***/
+  /** The local list of images need to be of type Base64Image*/
   @Input() localList: Base64Image[];
+  /** An function to call when an local image is seted as main*/
   @Output() onLocalImageSetAsMain: EventEmitter<Base64Image> = new EventEmitter<Base64Image>();
+  /** An function to call when an local image is deleted*/
   @Output() onLocalImageDelete: EventEmitter<Base64Image> = new EventEmitter<Base64Image>();
+  /** An function to call every time the list is updated, it emits the entire list*/
   @Output() onUpdateList: EventEmitter<Base64Image[]> = new EventEmitter<Base64Image[]>();
 
+  /** The server list of images, type any, but, it need to have the propertie path and the propertie main*/
   @Input() serverList: any[];
+  /** An function to call when an server image is seted as main*/
   @Output() onServerImageSetAsMain: EventEmitter<any> = new EventEmitter<any>();
+  /** An function to call when an server image is deleted*/
   @Output() onServerImageDelete: EventEmitter<any> = new EventEmitter<any>();
 
   private flow: Flow.IFlow;
