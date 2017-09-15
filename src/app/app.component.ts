@@ -1,4 +1,4 @@
-import { Base64Image } from './drop-image/base64.image.model';
+import { Base64Image, ErrorPicture } from './drop-image/base64.image.model';
 import { Component } from '@angular/core';
 
 @Component({
@@ -11,5 +11,9 @@ export class AppComponent {
 
   whenChange(image: Base64Image): void {
     console.log('image changed', image);
+  }
+
+  whenError(error: ErrorPicture): void {
+    console.log('error picture', error);
   }
 }

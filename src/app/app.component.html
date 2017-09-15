@@ -9,6 +9,9 @@
     [hasError]="true"
     errorText="The image is too big"
     defaultText="Please, select or drop an image"
-    (onImageChange)="whenChange($event)">
+    (onImageChange)="whenChange($event)"
+    minHeigth=1000
+    minHeigth=1000
+    (onError)="whenError($event)">
   </pluri-drop-image>
 </div>
