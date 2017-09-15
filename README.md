@@ -22,7 +22,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 // Import the library
-import { NgDropImageModule } from '@pluritech/ng-drop-image';
+import { DropImageModule } from '@pluritech/ng-drop-image';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { NgDropImageModule } from '@pluritech/ng-drop-image';
     BrowserModule,
 
     // Specify the library as an import
-    NgDropImageModule
+    DropImageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
