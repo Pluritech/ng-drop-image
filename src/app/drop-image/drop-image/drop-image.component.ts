@@ -37,25 +37,33 @@ export class DropImageComponent implements OnInit {
   /** Min heigth of any image inserted, default is null, so, every image will be accepted */
   @Input() minHeigth: number;
 
-  /** An function to call when the image have changed, only if you're using an single image */
-  @Output() onImageChange: EventEmitter<Base64Image> = new EventEmitter<Base64Image>();
-
   /** An function to call when has an error with the image */
   @Output() onError: EventEmitter<ErrorPicture> = new EventEmitter<ErrorPicture>();
 
-  @Input() list1: [{}];
-  @Output() onList1ImageSetAsMain: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onList1ImageDelete: EventEmitter<any> = new EventEmitter<any>();
+  /** An function to call when the image have changed, only if you're using an single image */
+  @Output() onImageChange: EventEmitter<Base64Image> = new EventEmitter<Base64Image>();
 
-  @Input() list2: [{}];
-  @Output() onList2ImageSetAsMain: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onList2ImageDelete: EventEmitter<any> = new EventEmitter<any>();
+  /* Working with multiple images, the user can have two lists. In one list he can handle the images that was not send to server yet.
+    The order list can handle images that was received from server, for example. */
+
+  /***/
+  @Input() localList: Base64Image[];
+  @Output() onLocalImageSetAsMain: EventEmitter<Base64Image> = new EventEmitter<Base64Image>();
+  @Output() onLocalImageDelete: EventEmitter<Base64Image> = new EventEmitter<Base64Image>();
+  @Output() onUpdateList: EventEmitter<Base64Image[]> = new EventEmitter<Base64Image[]>();
+
+  @Input() serverList: any[];
+  @Output() onServerImageSetAsMain: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onServerImageDelete: EventEmitter<any> = new EventEmitter<any>();
 
   private flow: Flow.IFlow;
   public image: any;
   private dropAreaElement: any;
   private flowButtonElement: any;
-  constructor() { }
+  constructor() {
+    this.localList = [];
+    this.serverList = [];
+  }
 
   ngOnInit() {
     this._initFlow();
@@ -111,7 +119,12 @@ export class DropImageComponent implements OnInit {
       }
 
       this.image = new Base64Image(readerEvent.target.result, false);
-      this.onImageChange.emit(this.image);
+      if (this.singleImage) {
+        this.onImageChange.emit(this.image);
+      } else {
+        this.localList.push(this.image);
+        this.onUpdateList.emit(this.localList);
+      }
     };
     this.flow.files = [];
   }

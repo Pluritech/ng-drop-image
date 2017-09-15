@@ -8,11 +8,31 @@
   </span>
 </div>
 <div class="image-preview" id="drop-area">
-  <img class="img-responsive" alt="" [src]="image?.base64Full || imagePath" *ngIf="image || imagePath">
-  <p *ngIf="hasError" class="text-danger">
-    {{errorText}}
-  </p>
-  <p *ngIf="!hasError && (!image && !imagePath)">
-    {{defaultText}}
-  </p>
+  <div *ngIf="singleImage" class="single-image" >
+    <img [src]="image?.base64Full || imagePath" *ngIf="image || imagePath">
+    <p *ngIf="hasError" class="text-danger">
+      {{errorText}}
+    </p>
+    <p *ngIf="!hasError && (!image && !imagePath)">
+      {{defaultText}}
+    </p>
+  </div>
+
+  <div class="container-images">
+    <div *ngIf="!singleImage" class="multiple">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 container-item" *ngFor="let img of localList">
+        <img [src]="img.base64Full" class="img-responsive" [ngClass]="{'is-main': img.main}" (click)="onLocalImageSetAsMain.emit(img);">
+
+        <i class="glyphicon glyphicon-remove-circle remove-image-button" (click)="onLocalImageDelete.emit(img);"></i>
+        <i class="glyphicon glyphicon-ok-circle select-cover-image-button" *ngIf="img.main"></i>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 container-item" *ngFor="let img of serverList">
+        <img [src]="img.path" class="img-responsive" [ngClass]="{'is-main': img.main}" (click)="onServerImageSetAsMain.emit(img);">
+
+        <i class="glyphicon glyphicon-remove-circle remove-image-button" (click)="onServerImageDelete.emit(img);"></i>
+        <i class="glyphicon glyphicon-ok-circle select-cover-image-button" *ngIf="img.main"></i>
+      </div>
+    </div>
+  </div>
 </div>

@@ -4,15 +4,25 @@
   </h1>
 </div>
 
-<div class="col-sm-6 col-sm-offset-3">
-  <pluri-drop-image btnSelect="Select"
-    [hasError]="true"
-    errorText="The image is too small"
-    defaultText="Please, select or drop an image"
-    inputPlaceholder="Select an image"
-    (onImageChange)="whenChange($event)"
-    minHeigth=1000
-    minHeigth=1000
-    (onError)="whenError($event)">
-  </pluri-drop-image>
+<div class="container">
+  <div class="row">
+    <pluri-drop-image btnSelect="Select"
+      [localList]="myUpdatedImageList"
+      [serverList]="myServerImageList"
+      [singleImage]="false"
+      [hasError]="true"
+      errorText="The image is too small"
+      defaultText="Please, select or drop an image"
+      inputPlaceholder="Select an image"
+      (onImageChange)="whenChange($event)"
+      minHeigth=1000
+      minHeigth=1000
+      (onError)="whenError($event)"
+      (onUpdateList)="whenUpdateLocalList($event)"
+      (onLocalImageSetAsMain)="whenLocalImageSetAsMain($event)"
+      (onLocalImageDelete)="whenLocalImageDelete($event)"
+      (onServerImageSetAsMain)="whenServerImageSetAsMain($event)"
+      (onServerDelete)="whenServerImageDelete($event)">
+    </pluri-drop-image>
+  </div>
 </div>
