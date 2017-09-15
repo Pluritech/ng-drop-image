@@ -22,6 +22,9 @@ export class DropImageComponent implements OnInit {
   /** The default text, something like... 'Please, drop an image*/
   @Input() defaultText: string;
 
+  /** The text to be show in the blocked input*/
+  @Input() inputPlaceholder: string;
+
   /** An boolean to indicate if you want to work with a single image or multiple. Default is true*/
   @Input() singleImage = true;
 
@@ -98,7 +101,7 @@ export class DropImageComponent implements OnInit {
     return hasError;
   }
 
-  private _handleImage(readerEvent: any) {
+  private _handleImage(readerEvent: any): void {
     const image = new Image();
     image.src = readerEvent.target.result;
     image.onload = () => {
