@@ -6,7 +6,7 @@ export class Base64Image {
 
   constructor(base64Full: string, main = false) {
     this.base64Full = base64Full;
-    this.base64Min = base64Full.substr(23, base64Full.length);
+    this.base64Min = base64Full.split(',')[1];
     this.main = main;
   }
 }
