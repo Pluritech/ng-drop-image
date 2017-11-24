@@ -2,7 +2,7 @@
 
 An angular component to help you to handle with an single or multiple image. The images can be inputed by user using the traditional select or the drop functionality.
 
-#### Demo (This repository has also the demo)
+#### Demo (This repository has also this demo)
 <p align="center">
   <img src="./ng-drop-image.gif">
 </p>
